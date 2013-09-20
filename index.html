@@ -8,7 +8,8 @@
     <script>
 
       $(document).ready(function(){
-        var $body = $('body');
+        var $body = $('body'), count = streams.home.length - 1;
+        
         $body.html('');
 
         var index = streams.home.length - 1;
@@ -19,6 +20,18 @@
           $tweet.appendTo($body);
           index -= 1;
         }
+        
+        var update = function() {
+          var newTweet = {};
+          for (var i = count; i	< streams.home.length; i++) {
+          	newTweet = streams.home[i];
+          	$body.append('<div>@' + newTweet.user + ': ' + newTweet.message + ' - ' + newTweet.created_at + '</div>');
+          	$body.find('div:first').remove();
+          };
+          count = streams.home.length;
+    	};
+        
+        setInterval( update , 500);
 
       });
 
